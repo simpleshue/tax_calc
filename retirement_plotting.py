@@ -444,32 +444,3 @@ def plot_nj_state_tax_behavior():
     )
     fig.show()
 
-if __name__ == "__main__":
-    try:
-        plot_ordinary_tax()
-        plot_ltcg_stacking()
-        plot_niit_behavior()
-        plot_irmaa_behavior()
-        plot_nj_state_tax_behavior()
-        
-        current_yr = datetime.now().year
-        params = retirement_simulation.SimParameters(
-            current_age=40, retirement_age=65, death_age=90, start_year=current_yr,
-            cash_savings=7e6, taxable_account_basis=0, pretax_balance=1e6, roth_balance=5.8e5,
-            retirement_return_rate=0.06, taxable_return_rate=0.04, inflation_rate=0.03,
-            annual_salary=5e5, annual_pretax_contribution=7e4, annual_roth_contribution=4.5e4,
-            social_security=25000, social_security_start_age=67,
-            default_expense_params=retirement_simulation.ExpenseParams(
-                method='asset_ratio', base_annual_expense=3e5, expense_ratio=0.04, max_annual_expense=5e5
-            ),
-            annual_pretax_withdrawal_ratio=0.02,
-            do_roth_conversions=True, conversion_start_age=65, conversion_end_age=59,
-            annual_conversion_amount=20000
-        )
-        
-        df_results = retirement_simulation.run_simulation(params)
-        plot_simulation_results(df_results, params)
-        
-        print("All plots generated successfully.")
-    except Exception as e:
-        print(f"An error occurred: {e}\nEnsure retirement_simulation.py is in your path.")
